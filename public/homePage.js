@@ -20,9 +20,7 @@ ApiConnector.current((response) => {
 
 const ratesBoard = new RatesBoard;
 
-ApiConnector.getStocks();
-
-tableCurrency = response => {
+const tableCurrency = response => {
   if(response.success === true) {
     ratesBoard.clearTable();
     ratesBoard.fillTable(response.data);
@@ -89,9 +87,9 @@ ApiConnector.getFavorites((response) => {
 favoritesWidget.addUserCallback = data => {
   ApiConnector.addUserToFavorites(data, response => {  
   if(response.success === true) {
-    favoritesWidget.getData();
-      ProfileWidget.showProfile(response.data);
-      favoritesWidget.setMessage(response.success, "Пользователь добавлен в список избранных");
+    favoritesWidget.clearTable();
+    favoritesWidget.fillTable(response.data);
+     favoritesWidget.setMessage(response.success, "Пользователь добавлен в список избранных");
     } else {
       favoritesWidget.setMessage(response.success, response.error);
   }
@@ -102,9 +100,9 @@ favoritesWidget.addUserCallback = data => {
 favoritesWidget.removeUserCallback = data => {
   ApiConnector.removeUserFromFavorites(data, response => {
     if(response.success === true) {
-      favoritesWidget.getData();
-      ProfileWidget.showProfile(response.data);
-      favoritesWidget.setMessage(response.success, "Пользователь удалён из списка ибранных");
+      favoritesWidget.clearTable();
+      favoritesWidget.fillTable(response.data); 
+      favoritesWidget.setMessage(response.success, "Пользователь удалён из списка избранных");
       } else {
         favoritesWidget.setMessage(response.success, response.error); 
   }
